@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/crud_service.dart';
+import 'package:notes/auth_service.dart';
+import 'package:notes/login_page.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -13,10 +15,22 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey,
-      appBar: AppBar(
-        title: const Text('Firebase Gilay'),
+           appBar: AppBar(
+        title: const Text('Firebase Joves'),
         centerTitle: true,
         backgroundColor: Colors.teal,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              AuthService().signOut();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => LoginPage()),
+              );
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.teal,

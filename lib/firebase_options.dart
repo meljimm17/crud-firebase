@@ -47,29 +47,30 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDxe3dDjF0IcWkN61LZpWj9ZN57bLc0rLg',
-    appId: '1:891860742616:web:cf23548dc94617432ec2ad',
-    messagingSenderId: '891860742616',
-    projectId: 'notes-75581',
-    authDomain: 'notes-75581.firebaseapp.com',
-    storageBucket: 'notes-75581.firebasestorage.app',
-    measurementId: 'G-W8H9SXX188',
+    apiKey: 'AIzaSyBSTWbZD6JI_dE8jITH5IGs7NgT_F56c9E',
+    appId: '1:186838297135:web:087f8314e128df24aa74da',
+    messagingSenderId: '186838297135',
+    projectId: 'notes-3d87f',
+    authDomain: 'notes-3d87f.firebaseapp.com',
+    storageBucket: 'notes-3d87f.firebasestorage.app',
+    measurementId: 'G-ZCGQG8KPZC',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAI78PORb28Gi2Rty3QiJsW44c4ObZMK04',
-    appId: '1:891860742616:android:33c5cff218c628102ec2ad',
-    messagingSenderId: '891860742616',
-    projectId: 'notes-75581',
-    storageBucket: 'notes-75581.firebasestorage.app',
+    apiKey: 'AIzaSyCabH1mofwF5skqm0EUmkuCkNlLN-Q2MJE',
+    appId: '1:186838297135:android:32a01b3eb2d9a5c1aa74da',
+    messagingSenderId: '186838297135',
+    projectId: 'notes-3d87f',
+    storageBucket: 'notes-3d87f.firebasestorage.app',
   );
-
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDUA56Em8bm_H4QR_kwPNe65wMbs0pQWcw',
-    appId: '1:891860742616:ios:5765e4e8c6e184852ec2ad',
-    messagingSenderId: '891860742616',
-    projectId: 'notes-75581',
-    storageBucket: 'notes-75581.firebasestorage.app',
-    iosBundleId: 'com.example.note',
+    apiKey: 'AIzaSyDsg07YtBQUWkOAGEaudwNCJxHAx6f75zo',
+    appId: '1:186838297135:ios:cfb2d8c44e25ca85aa74da',
+    messagingSenderId: '186838297135',
+    projectId: 'notes-3d87f',
+    storageBucket: 'notes-3d87f.firebasestorage.app',
+    androidClientId: '186838297135-vf2h31ijnsqaavbo6ll1opb930cib5ql.apps.googleusercontent.com',
+    iosClientId: '186838297135-ikssrknc0me98b8lcir5qcravbq8v43d.apps.googleusercontent.com',
+    iosBundleId: 'com.example.notes',
   );
 }
