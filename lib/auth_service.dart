@@ -1,102 +1,60 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn? _googleSignIn = kIsWeb ? null : GoogleSignIn();
 
-  // Google Sign-In 7.x
-  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
-
-  bool _googleInitialized = false;
-
-  Future<void> _initializeGoogleSignIn() async {
-    if (_googleInitialized || kIsWeb) return;
-
-    await _googleSignIn.initialize();
-
-    _googleInitialized = true;
-  }
-
+  // GOOGLE SIGN-IN
   Future<User?> signInWithGoogle() async {
-    try {
-      // Web
-      if (kIsWeb) {
-        final GoogleAuthProvider googleProvider =
-            GoogleAuthProvider();
+    if (kIsWeb) {
+      GoogleAuthProvider googleProvider = GoogleAuthProvider();
+      UserCredential userCredential =
+          await _auth.signInWithPopup(googleProvider);
+      return userCredential.user;
+    } else {
+      final googleUser = await _googleSignIn!.signIn();
+      if (googleUser == null) return null;
 
-        final UserCredential userCredential =
-            await _auth.signInWithPopup(googleProvider);
-
-        return userCredential.user;
-      }
-
-      // Android / iOS
-      await _initializeGoogleSignIn();
-
-      final GoogleSignInAccount googleUser =
-          await _googleSignIn.authenticate();
-
-      final GoogleSignInAuthentication googleAuth =
-          googleUser.authentication;
-
+      final googleAuth = await googleUser.authentication;
       final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-
-      final UserCredential userCredential =
-          await _auth.signInWithCredential(credential);
-
-      return userCredential.user;
-    } catch (e) {
-      print('Google Sign-In Error: $e');
-      return null;
+      return (await _auth.signInWithCredential(credential)).user;
     }
   }
 
-  // Register with email and password
-  Future<User?> registerWithEmail(
-    String email,
-    String password,
-  ) async {
+  // EMAIL/PASSWORD REGISTER
+  Future<User?> registerWithEmail(String email, String password) async {
     try {
-      final UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
+      final userCredential = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       return userCredential.user;
     } catch (e) {
-      print('Registration Error: $e');
+      print("Registration error: $e");
       return null;
     }
   }
 
-  // Login with email and password
-  Future<User?> signInWithEmail(
-    String email,
-    String password,
-  ) async {
+  // EMAIL/PASSWORD LOGIN
+  Future<User?> signInWithEmail(String email, String password) async {
     try {
-      final UserCredential userCredential =
-          await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
+      final userCredential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
       return userCredential.user;
     } catch (e) {
-      print('Login Error: $e');
+      print("Login error: $e");
       return null;
     }
   }
 
+  // SIGN OUT
   Future<void> signOut() async {
     if (!kIsWeb) {
-      await _googleSignIn.signOut();
+      await _googleSignIn?.signOut();
     }
-
     await _auth.signOut();
   }
 
